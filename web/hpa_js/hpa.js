@@ -21,6 +21,20 @@ HPAhpa.prototype.hpa_requisitarListagemIntegrantes = function () {
 
 };
 
+HPAhpa.prototype.hpa_requisitarAtualizacaoIntegrantes = function (hpa_primaria, hpa_id_elem) {
+
+    console.log("#HPAWebContent: Inicializando assercao de update async dos integrantes.");
+
+    $.get("hpats?hpa_mov=1&hpa_primaria_aluno=" + hpa_primaria, function (hpa_resposta) {
+
+        $('#' + hpa_id_elem).html(hpa_resposta);
+
+    });
+
+    console.log("#HPAWebContent: Assercao de update async dos integrantes, concluida.");
+
+};
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 var hparun = new HPAhpa();
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

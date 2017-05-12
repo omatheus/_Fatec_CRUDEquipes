@@ -21,6 +21,7 @@ import java.io.IOException;
  *   file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+
 @WebServlet (name = "HPABaseInterativa", urlPatterns = {"/hpabi"})
 public class HPABaseInterativa extends HttpServlet
 {
@@ -232,6 +233,8 @@ public class HPABaseInterativa extends HttpServlet
                         (
                             "<a href=\"" + "hpabi?hpa_obt_oper=0&hpa_us_pr=" +
                                 hpa_usuario_iterado.getHpat_primaria ()
+                                + "\"" + " id=\"hpausuario_" + String.valueOf (hpa_usuario_iterado.getHpat_primaria ())
+                                
                                 + "\">" +
                                 
                                 hpa_usuario_iterado.getHpat_nome ()
@@ -242,11 +245,32 @@ public class HPABaseInterativa extends HttpServlet
                                 
                                 hpa_usuario_iterado.getHpat_primaria ()
                                 
-                                + "\"> \\X/ </button></span>"
+                                + "\"" + " onclick=\""
+                                
+                                + "hparun.hpa_requisitarAtualizacaoIntegrantes(" +
+                                
+                                
+                                String.valueOf (hpa_usuario_iterado.getHpat_primaria ())
+                                
+                                +
+                                
+                                ",'"
+                                
+                                +
+                                
+                                new String ("hpausuario_" +
+                                    String.valueOf (hpa_usuario_iterado.getHpat_primaria ()))
+                                
+                                +
+                                
+                                "')\""
+                                
+                                + " > \\X/ </button></span>"
                                 
                                 
                                 + "<br><hr><br>"
                         );
+                    
                     
                   }
                   else

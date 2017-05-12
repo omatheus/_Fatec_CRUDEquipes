@@ -18,9 +18,7 @@ import java.io.IOException;
  *   file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/**
- * Created by m-h-silva on 5/11/17.
- */
+
 @WebServlet (name = "HPABaseAssertiva", urlPatterns = {"/hpats"})
 public class HPABaseAssertiva extends HttpServlet
 {
@@ -79,7 +77,40 @@ public class HPABaseAssertiva extends HttpServlet
           
           
         }
+        break;
         
+        case HPABaseAssertivaPropria.hpa_solicitar_modificacao_integrantes:
+        {
+          
+          assert (request.getParameter ("hpa_primaria_aluno") != null);
+          
+          final HPABaseNucleo hpa_movimentacao_bd = new HPABaseNucleo ();
+          
+          hpa_movimentacao_bd.hpaInicilizar ();
+          hpa_movimentacao_bd.hpaConectar ();
+          
+          final String hpa_integrantes_atuais =
+              hpa_movimentacao_bd.
+                  <String> hpaRetornoDe (HPABaseRecorrencia.hpa_sql_selecionar_integrantes);
+          
+          hpa_movimentacao_bd.hpaFinalizar ();
+          
+          
+          final String hpa_integrantes_modificados = hpa_integrantes_atuais
+              .replaceAll (new String (request.getParameter ("hpa_primaria_aluno") + ";")
+                  ,"");
+          
+          
+          hpa_movimentacao_bd.hpaExecutarSimples
+              (HPABaseRecorrencia.hpa_sql_modificar_integrantes,
+                  new String[]
+                      {"Ly" + hpa_integrantes_modificados});
+          
+          response.setContentType ("text/html");
+          response.getWriter ().println ("<strong>| Removido |</strong>");
+          
+        }
+        break;
         
       }
       
@@ -96,6 +127,100 @@ public class HPABaseAssertiva extends HttpServlet
   @Override
   protected void doGet (HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException
   {
+    
+    
+    try
+    {
+      
+      assert (request.getParameter ("hpa_mov") != null);
+      
+      switch ( Integer.parseInt (request.getParameter ("hpa_mov")) )
+      {
+        
+        case HPABaseAssertivaPropria.hpa_solicitar_atualizacao_integrantes:
+        {
+          
+          assert (request.getParameter ("hpa_primaria_aluno") != null);
+          
+          final HPABaseNucleo hpa_movimentacao_bd = new HPABaseNucleo ();
+          
+          hpa_movimentacao_bd.hpaInicilizar ();
+          hpa_movimentacao_bd.hpaConectar ();
+          
+          final String hpa_integrantes_atuais =
+              hpa_movimentacao_bd.
+                  <String> hpaRetornoDe (HPABaseRecorrencia.hpa_sql_selecionar_integrantes);
+          
+          hpa_movimentacao_bd.hpaFinalizar ();
+          
+          if
+              ( ! hpa_integrantes_atuais.contains (request.getParameter ("hpa_primaria_aluno")) )
+          {
+            
+            
+            
+            hpa_movimentacao_bd.hpaExecutarSimples
+                (HPABaseRecorrencia.hpa_sql_atualizar_novo_integrante,new String[]
+                    {"Ly" + request.getParameter ("hpa_primaria_aluno") + ";"});
+            
+            
+            response.setContentType ("text/html");
+            response.getWriter ().println ("<div><h3 style=\"color:tan;\">Ok... retornando.</h3></div>");
+          }
+          else
+          {
+            
+            response.setContentType ("text/html");
+            response.getWriter ().println ("<div><h3 style=\"color:tan;\">ESPERE! Aluno ja inserido.</h3></div>");
+            
+          }
+          
+          
+        }
+        break;
+        
+        case HPABaseAssertivaPropria.hpa_solicitar_modificacao_integrantes:
+        {
+          
+          assert (request.getParameter ("hpa_primaria_aluno") != null);
+          
+          final HPABaseNucleo hpa_movimentacao_bd = new HPABaseNucleo ();
+          
+          hpa_movimentacao_bd.hpaInicilizar ();
+          hpa_movimentacao_bd.hpaConectar ();
+          
+          final String hpa_integrantes_atuais =
+              hpa_movimentacao_bd.
+                  <String> hpaRetornoDe (HPABaseRecorrencia.hpa_sql_selecionar_integrantes);
+          
+          hpa_movimentacao_bd.hpaFinalizar ();
+          
+          
+          final String hpa_integrantes_modificados = hpa_integrantes_atuais
+              .replaceAll (new String (request.getParameter ("hpa_primaria_aluno") + ";")
+                  ,"");
+          
+          
+          hpa_movimentacao_bd.hpaExecutarSimples
+              (HPABaseRecorrencia.hpa_sql_modificar_integrantes,
+                  new String[]
+                      {"Ly" + hpa_integrantes_modificados});
+          
+          
+          response.setContentType ("text/html");
+          response.getWriter ().println ("<strong>| Removido |</strong>");
+          
+        }
+        break;
+        
+      }
+      
+    } catch (Exception hpa_web_exececao)
+    {
+      
+      hpa_web_exececao.printStackTrace ();
+      
+    }
     
     
   }

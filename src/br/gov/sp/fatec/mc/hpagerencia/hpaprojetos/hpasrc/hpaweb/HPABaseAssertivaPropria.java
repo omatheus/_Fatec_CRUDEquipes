@@ -7,10 +7,14 @@ package br.gov.sp.fatec.mc.hpagerencia.hpaprojetos.hpasrc.hpaweb;
  *   file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+
 public abstract class HPABaseAssertivaPropria
 {
   
   
   public static final int hpa_solicitar_atualizacao_integrantes = 0;
+  
+  
+  public static final int hpa_solicitar_modificacao_integrantes = 1;
   
 }

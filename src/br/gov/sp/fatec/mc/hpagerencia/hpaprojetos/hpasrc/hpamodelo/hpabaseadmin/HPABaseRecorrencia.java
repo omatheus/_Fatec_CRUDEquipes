@@ -7,6 +7,7 @@ package br.gov.sp.fatec.mc.hpagerencia.hpaprojetos.hpasrc.hpamodelo.hpabaseadmin
  *   file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+
 public abstract class HPABaseRecorrencia
 {
   
@@ -39,4 +40,7 @@ public abstract class HPABaseRecorrencia
   
   
   public static final String hpa_sql_atualizar_novo_integrante = "update hpaprojeto set hpatequipe = hpatequipe ||";
+  
+  
+  public static final String hpa_sql_modificar_integrantes = "update hpaprojeto set hpatequipe =";
 }
