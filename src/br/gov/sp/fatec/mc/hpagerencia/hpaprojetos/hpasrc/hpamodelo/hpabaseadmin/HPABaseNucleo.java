@@ -14,6 +14,12 @@ import java.util.Random;
 import java.util.TreeMap;
 
 
+/*
+ *   This Source Code Form is subject to the terms of the Mozilla Public
+ *   License, v. 2.0. If a copy of the MPL was not distributed with this
+ *   file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 public class HPABaseNucleo implements HPABaseInterface
 {
   
@@ -458,6 +464,56 @@ public class HPABaseNucleo implements HPABaseInterface
       this.hpaFinalizar ();
       
     }
+    
+  }
+  
+  
+  @Override
+  public <A> A hpaRetornoDe (final String hpa_chamada)
+  {
+    
+    
+    try
+    {
+      
+      HPASaida.hpaImprimir ("Chamada de retorno generico unitario (hpaRetornoDe)");
+      
+      
+      this.hpa_statement_interno = this.hpa_linha_conexao.createStatement ();
+      this.hpa_resultset_interno = this.hpa_statement_interno.executeQuery (hpa_chamada);
+      
+      if ( ! hpa_resultset_interno.isBeforeFirst () )
+      {
+        HPASaida.hpaImprimir ("Nenhum registro disponivel.");
+        this.hpa_statement_interno.close ();
+        this.hpa_resultset_interno.close ();
+        return null;
+      }
+      
+      
+      this.hpa_resultset_interno.next ();
+      
+      
+      final A hpa_busca_principal = (A) this.hpa_resultset_interno.getString (1);
+      
+      this.hpa_statement_interno.close ();
+      this.hpa_resultset_interno.close ();
+      
+      
+      HPASaida.hpaImprimir ("Chamada de retorno generico unitario (hpaRetornoDe) concluida.");
+      
+      
+      return hpa_busca_principal;
+      
+      
+    } catch
+        (Exception hpa_excecao)
+    {
+      
+      hpa_excecao.printStackTrace ();
+      return null;
+    }
+    
     
   }
   
